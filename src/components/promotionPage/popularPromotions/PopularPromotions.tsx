@@ -6,7 +6,6 @@ import "swiper/css";
 import { Navigation } from "swiper/modules";
 import { useQuery } from "@tanstack/react-query";
 import promotionService from "../../../services/promotionService";
-
 interface Props {
   promotionId: number;
 }

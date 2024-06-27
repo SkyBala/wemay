@@ -62,27 +62,22 @@ const Filter: FC<IFilterProps> = ({ isOpen, close }) => {
   }, [sortValue]);
 
   const handleCategory = (category: string) => {
-    // categoriesT.includes(category)
-    //   ? setCategoriesT((prev) => prev.filter((prevC) => prevC !== category))
-    //   : setCategoriesT((prev) => [...prev, category]);
-
-    categoriesT.includes(category)
-      ? setCategoriesT([])
-      : setCategoriesT([category]);
+    setCategoriesT((prev) =>
+      prev.includes(category)
+        ? prev.filter((prevC) => prevC !== category)
+        : [...prev, category]
+    );
   };
 
   const handlePromotionType = (type: string) => {
-    // promotionTypesT.includes(type)
-    //   ? setPromotionTypesT((prev) => prev.filter((prevC) => prevC !== type))
-    //   : setPromotionTypesT((prev) => [...prev, type]);
-
-    promotionTypesT.includes(type)
-      ? setPromotionTypesT([])
-      : setPromotionTypesT([type]);
-    //
+    setPromotionTypesT((prev) =>
+      prev.includes(type)
+        ? prev.filter((prevT) => prevT !== type)
+        : [...prev, type]
+    );
   };
 
-  const hangleDiscountPercentage = (event: ChangeEvent<HTMLInputElement>) =>
+  const handleDiscountPercentage = (event: ChangeEvent<HTMLInputElement>) =>
     setDiscountPercentageT(+event.target.value);
 
   const onChangeDiscountInput = (event: ChangeEvent<HTMLInputElement>) => {
@@ -192,36 +187,6 @@ const Filter: FC<IFilterProps> = ({ isOpen, close }) => {
                       checked={categoriesT.includes(category.title)}
                       onChange={() => handleCategory(category.title)}
                     />
-                    // <Accordeon
-                    //   key={category.title}
-                    //   style="mt-20"
-                    //   bodyStyle="pl-[26px]"
-                    //   button={
-                    //     <Checkbox
-                    //       name={category.title}
-                    //       icon={
-                    //         <div
-                    //           style={{
-                    //             maskImage: `url(${category.icon})`,
-                    //           }}
-                    //           className="w-[16px] h-[16px] bg-[#4F4F4F] opacity-50"
-                    //         ></div>
-                    //       }
-                    //       checked={categoriesT.includes(category.title)}
-                    //       onChange={() => handleCategory(category.title)}
-                    //     />
-                    //   }
-                    // >
-                    //   {/* {category.subCategories.map((subCategory) => (
-                    //     <Checkbox
-                    //       style="mt-20"
-                    //       key={subCategory.name}
-                    //       name={subCategory.name}
-                    //       checked={categoriesT.includes(category.name)}
-                    //       onChange={() => handleCategory(category.name)}
-                    //     />
-                    //   ))} */}
-                    // </Accordeon>
                   ))}
                 </Accordeon>
                 <h3 className="my-[24px] text-18 font-bold">Тип акции</h3>
@@ -248,7 +213,7 @@ const Filter: FC<IFilterProps> = ({ isOpen, close }) => {
                           <Range
                             max={99}
                             value={discountPercentageT}
-                            onChange={hangleDiscountPercentage}
+                            onChange={handleDiscountPercentage}
                           />
                           <div className="border border-[#DDDDDF] rounded-[24px] py-[12px] px-[16px] flex justify-center items-center w-[90px] bg-white text-center text-[20px] font-bold leadong-[24px] text-[#1D1D1F]">
                             <input

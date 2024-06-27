@@ -14,6 +14,8 @@ import facebookIcon from "../../../assets/images/icons/facebook.svg";
 import whatsappIcon from "../../../assets/images/icons/whatsapp.svg";
 import websiteIcon from "../../../assets/images/icons/website.svg";
 import crossIcon from "../../../assets/images/icons/cross.svg";
+import arrowTop from "../../../assets/images/icons/up-arrow.svg"
+import arrowDown from "../../../assets/images/icons/down-arrow.svg"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import mapService from "../../../services/mapService";
 import promotionService from "../../../services/promotionService";
@@ -129,15 +131,10 @@ console.log(contacts);
 
       const restDays = Math.floor(restTime / 1000 / 60 / 60 / 24);
       const restHours = Math.floor(restTime / 1000 / 60 / 60) % 24;
-      const restMinutes = Math.floor(restTime / 1000 / 60) % 60;
-      const restSeconds = Math.floor(restTime / 1000) % 60;
+
 
       setRestTime(
-        `${restDays}д ${restHours}ч ${
-          (restMinutes + "").length === 1 ? "0" : ""
-        }${restMinutes}:${
-          (restSeconds + "").length === 1 ? "0" : ""
-        }${restSeconds}`
+        `${restDays}д : ${restHours}ч`
       );
       timer = setTimeout(tick, 1000);
     }, 0);
@@ -291,7 +288,7 @@ console.log(contacts);
               onClick={onClickLike}
               disabled={!profile?.id}
               className="box-secondary border-green rounded-[100px] py-[7.5px] px-[24px] text-center text-14 leading-[19px] text-green disabled:pointer-events-none"
-            >
+            > 
               <img
                 src={
                   localLikes.includes(profile?.id!) ? likedIcon : likeGreenIcon
@@ -304,9 +301,12 @@ console.log(contacts);
           </div>
       
         
-          <div className="my-[21px] max-w-[255px] w-full h-[1px] bg-[#D7D7D7]"></div>
-         <span className="text-grey cursor-pointer" onClick={toggleAccordion}>
+        <div className="my-[21px] max-w-[255px] w-full h-[1px] bg-[#D7D7D7]"></div>
+         <span className="text-grey cursor-pointer  gap-4 flex items-center" onClick={toggleAccordion}>
         Часы работы
+        {isOpen ?
+        <img src={arrowTop} className="w-[20px] h-[20px]"/>
+      : <img src={arrowDown} className="w-[20px] h-[20px]"/>}
       </span>
       {isOpen && (
         <div>
@@ -331,11 +331,11 @@ console.log(contacts);
         
       )}
           <div className="font-mulish flex justify-center items-end flex-col">
-              <div className="flex gap-[6px] items-center text-14 leading-[19px] text-[#4F4F4F]">
+              <div className="flex items-center gap-2  justify-center text-14 leading-[19px] text-[#4F4F4F]">
                 <img src={timeIcon} alt="clock" />
                 <span>До конца акции</span>
               </div>
-              <span className="text-grey mr-[20px]">{restTime}</span>
+              <span className="text-grey mr-[9%]">{restTime}</span>
             </div>
         </div>
         <Modal

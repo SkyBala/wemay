@@ -17,7 +17,7 @@ export interface ICompany {
   facebook: string;
   whatsapp: string;
   website: string;
-  category:string;
+  category:string[];
 }
 
 export type ICompanyCard = Pick<

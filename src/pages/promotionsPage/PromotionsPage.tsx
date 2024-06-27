@@ -16,6 +16,7 @@ const PromotionsPage: FC = () => {
   // Using custom hook for companies
   const { data: companiesData, isLoading: isLoadingCompanies } = useCompanies();
   const { categories } = useSelector((state: RootState) => state.filter);
+console.log(categories);
 
   // Using useQuery for promotions data
   const { data: promotionsData, isLoading: isLoadingPromotions } = useQuery({
@@ -26,7 +27,7 @@ const PromotionsPage: FC = () => {
 
   // Filter companies based on selected categories
   const filteredCompanies = companiesData?.results.filter((company: ICompany) =>
-    categories.includes(company.category)
+    categories.includes(company.category[0])
   );
 
   // Get the filtered company names
