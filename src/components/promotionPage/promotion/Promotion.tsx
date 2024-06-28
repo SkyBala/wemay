@@ -27,7 +27,6 @@ import { useProfile } from "../../../hooks/useProfile";
 import companiesService from "../../../services/companiesService";
 import "swiper/css";
 import { setIsAuthOpen } from "../../../store/slices/authSlice"
-import { type } from './../../../store/store';
 const daysFormat = {
   monday: "Пн",
   tuesday: "Вт",
