@@ -47,7 +47,7 @@ const PromotionPage: FC = () => {
     
       <Promotion {...promotion} />
       <Reviews promotionId={+(id || 0)} />
-      <PopularPromotions promotionId={+(id || 0)} />
+      <PopularPromotions promotionId={+(id || 0) } />
     </>
   );
 };
