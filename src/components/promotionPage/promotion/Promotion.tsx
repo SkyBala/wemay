@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect,MouseEvent, useState } from "react";
 import { IPromotion } from "../../../types/types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
@@ -26,7 +26,8 @@ import clsx from "clsx";
 import { useProfile } from "../../../hooks/useProfile";
 import companiesService from "../../../services/companiesService";
 import "swiper/css";
-
+import { setIsAuthOpen } from "../../../store/slices/authSlice"
+import { type } from './../../../store/store';
 const daysFormat = {
   monday: "Пн",
   tuesday: "Вт",
@@ -98,16 +99,41 @@ console.log(contacts);
 
   const [localLikes, setLocalLikes] = useState(likes);
 
-  const { mutate: like } = useMutation({
+
+  useEffect(() => {
+    likes && setLocalLikes(likes);
+  }, [likes]);
+  const { mutate } = useMutation({
     mutationFn: promotionService.like,
     onSuccess: () => {
-      queryClient.prefetchQuery({ queryKey: ["liked-promotions"] });
+      queryClient.prefetchQuery({ queryKey: ['liked-promotions'] });
     },
   });
+
+  const onClickLike = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    console.log('click1');
+
+    if (!profile?.id) {
+      dispatch(setIsAuthOpen(true));
+      return;
+    }
+
+    mutate(id, {
+      onSuccess: () => {
+        setLocalLikes((prev) =>
+          prev.includes(profile.id)
+            ? prev.filter((likeId) => likeId !== profile.id)
+            : [...prev, profile.id]
+        );
+      },
+    });
+  };
 
   useEffect(() => {
     setCurrentImage(images[0]?.image);
   }, [images]);
+console.log(images[0]?.image);
 
   useEffect(() => {
     const date = end_date.split(" ")[0];
@@ -144,14 +170,14 @@ console.log(contacts);
     };
   }, []);
 
-  const onClickLike = () => {
-    like(id);
-    setLocalLikes((prev) =>
-      prev.includes(profile?.id!)
-        ? prev.filter((id) => id !== profile?.id)
-        : [...prev, profile?.id!]
-    );3
-  };
+  // const onClickLike = () => {
+  //   like(id);
+  //   setLocalLikes((prev) =>
+  //     prev.includes(profile?.id!)
+  //       ? prev.filter((id) => id !== profile?.id)
+  //       : [...prev, profile?.id!]
+  //   );3
+  // };
   const addressCoordinates = marker?.[0]
     ? [marker[0]?.lat, marker[0].lon]
     : null;
@@ -199,7 +225,7 @@ console.log(contacts);
   //       : { ...prev, [day]: workSchedule[day] };
   //   }, {})
   // );
-
+const fl = false
   return (
     <section className="container-two pt-[44px] pb-80">
       <h1 className="title">{title}</h1>
@@ -217,13 +243,18 @@ console.log(contacts);
             ) : (
               <div></div>
             )}
-            <div className="rounded-[24px,0px,24px,0px] py-[12px] px-[24px] bg-[linear-gradient(270deg,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0)_96.11%)] flex gap-[8px] items-center">
+           
+               <button disabled={fl}  onClick={onClickLike} className="rounded-[24px,0px,24px,0px] py-[12px] px-[24px] bg-[linear-gradient(270deg,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0)_96.11%)] flex gap-[8px] items-center">
+              
               <img
                 alt="like"
                 src={localLikes.includes(profile?.id!) ? likedIcon : likeIcon}
+             
               />
               <span>{localLikes?.length || 0}</span>
-            </div>
+            </button>
+           
+           
           </div>
           <div className="mt-[24px] flex justify-between items-center tb:flex-col tb:items-start tb:gap-[24px]">
             <Swiper
@@ -330,12 +361,14 @@ console.log(contacts);
         </div>
         
       )}
-          <div className="font-mulish flex justify-center items-end flex-col">
-              <div className="flex items-center gap-2  justify-center text-14 leading-[19px] text-[#4F4F4F]">
+          <div className="font-mulish flex justify-end">
+            <div className="flex justify-start items-start flex-col w-[15 0px]">
+              <div className="flex items-center gap-1   justify-center text-14 leading-[19px] text-[#4F4F4F]">
                 <img src={timeIcon} alt="clock" />
                 <span>До конца акции</span>
               </div>
-              <span className="text-grey mr-[9%]">{restTime}</span>
+              <span className="text-grey ml-[14px]">{restTime}</span>
+            </div>
             </div>
         </div>
         <Modal

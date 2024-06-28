@@ -82,7 +82,7 @@ const Search: FC<Props> = ({ isSearchFocus, setIsSearchFocus }) => {
           { "opacity-100 pointer-events-auto": isSearchFocus }
         )}
       >
-        <div className="overflow-hidden flex justify-start p-[30px] text-[16px] font-bold items-start h-full [&>:not(:last-child)]:mb-[24px]">
+        <div className="overflow-hidden flex flex-col justify-start p-[30px] text-[16px] font-bold items-start h-full [&>:not(:last-child)]:mb-[24px]">
           {isLoading ? (
             <Loading />
           ) : (
