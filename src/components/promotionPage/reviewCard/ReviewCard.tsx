@@ -43,8 +43,8 @@ const ReviewCard: FC<IReview> = ({ id, author, created_time, body, likes }) => {
       <div className="flex gap-[20px]">
         <img
           alt="ava"
-          src={author.image || avaIcon}
-          className="w-[36px] h-[36px]"
+          src={author.image.replace('https://wemay.kg/', 'http://176.126.166.197:8000') || avaIcon}
+          className="w-[36px] h-[36px] rounded-full"
         />
         <div>
           <strong className="mr-[8px] text-18 leading-[21px]">
