@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { IReview } from "../../../types/types";
-import likeIcon from "../../../assets/images/icons/Vectorlikes.svg";
+import likeIcon from "../../../assets/images/icons/likes.svg";
 import likeGreenIcon from "../../../assets/images/icons/liked.svg";
 import avaIcon from "../../../assets/images/icons/ava.svg";
 import { useProfile } from "../../../hooks/useProfile";
@@ -61,7 +61,6 @@ const ReviewCard: FC<IReview> = ({ id, author, created_time, body, likes }) => {
           disabled={!profile?.id}
           className={clsx(
             "w-[20px] h-[18px] bg-center bg-no-repeat",
-          
           )}
           style={{
             backgroundImage: `url(${isLiked && isAuth ? likeGreenIcon : likeIcon})`,
