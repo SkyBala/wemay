@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { IReview } from "../../../types/types";
-import likeIcon from "../../../assets/images/icons/like.svg";
+import likeIcon from "../../../assets/images/icons/Vectorlikes.svg";
 import likeGreenIcon from "../../../assets/images/icons/liked.svg";
 import avaIcon from "../../../assets/images/icons/ava.svg";
 import { useProfile } from "../../../hooks/useProfile";
@@ -59,15 +59,13 @@ const ReviewCard: FC<IReview> = ({ id, author, created_time, body, likes }) => {
         <button
           onClick={handleLike}
           disabled={!profile?.id}
+          className={clsx(
+            "w-[20px] h-[18px] bg-center bg-no-repeat",
+          
+          )}
           style={{
-            maskSize: "cover",
-            maskRepeat: "no-repeat",
-            maskImage: `url(${isLiked && isAuth ? likeGreenIcon : likeIcon})`,
+            backgroundImage: `url(${isLiked && isAuth ? likeGreenIcon : likeIcon})`,
           }}
-          className={clsx("w-[20px] h-[18px] disabled:pointer-events-none", {
-            "bg-green": isLiked && isAuth,
-            "bg-[rgba(51,51,51,0.6)]": !isLiked || !isAuth,
-          })}
         ></button>
       </div>
     </div>
@@ -75,3 +73,4 @@ const ReviewCard: FC<IReview> = ({ id, author, created_time, body, likes }) => {
 };
 
 export default ReviewCard;
+  
