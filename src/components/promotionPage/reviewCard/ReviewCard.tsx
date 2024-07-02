@@ -62,10 +62,8 @@ const ReviewCard: FC<IReview> = ({ id, author, created_time, body, likes }) => {
           className={clsx(
             "w-[20px] h-[18px] bg-center bg-no-repeat",
           )}
-          style={{
-            backgroundImage: `url(${isLiked && isAuth ? likeGreenIcon : likeIcon})`,
-          }}
-        ></button>
+        >
+        <img src={`${isLiked && isAuth ? likeGreenIcon : likeIcon}`} alt="image" /></button>
       </div>
     </div>
   );
