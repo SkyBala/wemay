@@ -1,4 +1,4 @@
-import  { FC } from "react";
+import { FC } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import arrowLeftIcon from "../../../assets/images/icons/arrow-left.svg";
 import { Autoplay, Navigation } from "swiper/modules";
@@ -6,19 +6,16 @@ import { Link } from "react-router-dom";
 import Loading from "../../ui/loading/Loading";
 import clsx from "clsx";
 import "swiper/css";
-
-interface Promotion {
-  id: number;
-  title: string;
-  slider_image: string;
-}
+import { IPromotion } from "../../../types/types";
 
 interface SliderProps {
-  data: Promotion[];
+  data: IPromotion[];
   isLoading: boolean;
 }
 
 const Slider: FC<SliderProps> = ({ data = [], isLoading }) => {
+  console.log(data);
+  
   return (
     <section className="container main mt-[32px] max-w-[1377px]">
       <div className="rounded-[48px] py-[125px] h-[508px] flex items-center bg-gray lt:py-40 lt:h-auto">
@@ -33,6 +30,10 @@ const Slider: FC<SliderProps> = ({ data = [], isLoading }) => {
         {isLoading ? (
           <div className="relative flex-grow">
             <Loading />
+          </div>
+        ) : data.length === 0 ? (
+          <div className="flex-grow text-center text-[24px] font-bold">
+            Нет данных
           </div>
         ) : (
           <Swiper
@@ -53,7 +54,7 @@ const Slider: FC<SliderProps> = ({ data = [], isLoading }) => {
           >
             {data.map((promotion) => (
               <SwiperSlide
-                key={promotion.id}
+                key={promotion?.id}
                 className="flex justify-between items-center lt:flex-col lt:gap-[20px]"
               >
                 <div className="flex-[0_1_490px] lt:px-20 lt:flex-auto lt:max-w-[595px] lt:order-[2]">
@@ -61,7 +62,7 @@ const Slider: FC<SliderProps> = ({ data = [], isLoading }) => {
                     {promotion.title}
                   </h3>
                   <span className="mt-20 mb-40 block text-[20px] font-medium tb:mt-[16px] tb:text-18">
-                    Покумай прямо сейчас!
+                    Покупай прямо сейчас!
                   </span>
                   <Link
                     to={`/promotion/${promotion.id}`}

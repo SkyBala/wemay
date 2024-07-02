@@ -132,7 +132,7 @@ console.log(contacts);
   useEffect(() => {
     setCurrentImage(images[0]?.image);
   }, [images]);
-console.log(images[0]?.image);
+console.log(images[1]?.image);
 
   useEffect(() => {
     const date = end_date.split(" ")[0];
@@ -203,6 +203,7 @@ console.log(images[0]?.image);
       }, {})
     : null;
 
+  
   // console.log(
   //   workSchedule,
   //   Object.keys(workSchedule)?.reduce((prev, day) => {

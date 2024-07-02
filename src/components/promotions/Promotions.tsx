@@ -10,12 +10,12 @@ import Filter from "../filter/Filter";
 import Pagination from "../ui/pagination/Pagination";
 import Map from "../map/Map";
 import clsx from "clsx";
-import { useQuery } from "@tanstack/react-query";
 import promotionService from "../../services/promotionService";
 import Loading from "../ui/loading/Loading";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { IPromotion } from "../../types/types";
+import { useQuery } from '@tanstack/react-query';
 const typesSlug: { [key: string]: string } = {
   Скидка: "Discount",
   Бонус: "Bonus",
@@ -29,7 +29,7 @@ interface IPromotions {
   style?: string;
   companyName?: string;
   promotionsType?: "daily" | "endSoon" | "free";
-  data?: IPromotion[] | undefined;
+  data?: IPromotion[];
  
 }
 
@@ -39,6 +39,7 @@ const Promotions: FC<IPromotions> = ({
   style = "",
   companyName = "",
   promotionsType,
+
   
 }) => {
   const { categories, promotionTypes, discountPercentage, sortValue } =
@@ -52,25 +53,24 @@ const Promotions: FC<IPromotions> = ({
   const discount = discountPercentage + "";
   const type = typesSlug[promotionTypes[0]];
 
-  const params = {
-    page,
-    page_size: limit,
-    company__name: companyName,
-    category__title: categoryName,
-    type,
-    ...(+discount ? { min_discount: discount } : {}),
-    ...(promotionsType === "daily" ? { is_daily: true } : {}),
-    ...(sortValue === "Самые популярные"
-      ? { popular: "likes" }
-      : sortValue === "Сначала новые"
-      ? { new: true }
-      : sortValue === "По цене (высокая-низкая)"
-      ? { highest_price: "new_price" }
-      : sortValue === "По цене (низкая-высокая)"
-      ? { lowest_price: "new_price" }
-      : {}),
-  };
-
+const params = {
+  page,
+  page_size: limit,
+  company_name: companyName,
+  category_name: categoryName, // Use categories directly as an array
+  type: promotionTypes.map(type => typesSlug[type]), // Map promotionTypes to corresponding slugs
+  ...(+discount ? { min_discount: discount } : {}),
+  ...(promotionsType === "daily" ? { is_daily: true } : {}),
+  ...(sortValue === "Самые популярные"
+    ? { popular: "likes" }
+    : sortValue === "Сначала новые"
+    ? { new: true }
+    : sortValue === "По цене (высокая-низкая)"
+    ? { highest_price: "new_price" }
+    : sortValue === "По цене (низкая-высокая)"
+    ? { lowest_price: "new_price" }
+    : {}),
+};
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["promotions"],
     queryFn: () =>
@@ -85,6 +85,7 @@ const Promotions: FC<IPromotions> = ({
     select: ({ data }) => data,
     enabled: false,
   });
+console.log(data?.results);
 
 
   useEffect(() => {

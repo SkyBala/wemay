@@ -21,8 +21,9 @@ const PromotionPage: FC = () => {
     queryFn: () => promotionService.getById(+(id || 0)),
     select: ({ data }) => data,
   });
-
+console.log(promotion);
   if (!promotion) return <div></div>;
+
 
   return (
     <>
@@ -45,7 +46,7 @@ const PromotionPage: FC = () => {
         <span>{">"}</span> <span>{textLimit(promotion?.title, 21)}</span>
       </div>
     
-      <Promotion {...promotion} />
+      <Promotion {...promotion } />
       <Reviews promotionId={+(id || 0)} />
       <PopularPromotions promotionId={+(id || 0) } />
     </>
