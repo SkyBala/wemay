@@ -20,7 +20,7 @@ import PromotionsPage from "../pages/promotionsPage/PromotionsPage";
 export const routes = [
   {
     path: "*",
-    element: <ErrorPage message="Страница не найдена" />,
+    element: <ErrorPage message="Упс, по вашему запросу ничего не найдено🥺" />,
   },
   { path: "/", element: <MainPage /> },
   { path: "/auth?/*", element: <MainPage /> },

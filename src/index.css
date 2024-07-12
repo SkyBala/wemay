@@ -31,10 +31,10 @@
   }
   h2,
   .title {
-    @apply text-[32px] leading-[41px] font-bold font-montserrat text-[rgba(51,51,51,1)];
+    @apply text-[32px] leading-[41px] font-bold font-montserrat text-[#333];
   }
   .title-3 {
-    @apply text-18 text-[rgba(79,79,79,1)] leading-[23px] font-bold font-montserrat;
+    @apply text-18 text-[#333] leading-[23px] font-bold font-montserrat;
   }
   ::-webkit-scrollbar-thumb {
     @apply bg-primary rounded-[8px];
@@ -110,5 +110,15 @@
   }
   .btn {
     @apply rounded-[30px] bg-green py-[16px] px-[49px] text-white font-bold font-montserrat text-center trans-def hover:brightness-75 active:brightness-105 disabled:pointer-events-none disabled:bg-[rgba(203,203,203,1)] disabled:text-[rgba(129,129,129,1)];
+  }
+}
+/* Add this to your CSS file */
+.show-on-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .show-on-mobile {
+    display: inline-block;
   }
 }

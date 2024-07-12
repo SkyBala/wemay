@@ -246,25 +246,21 @@ const Filter: FC<IFilterProps> = ({ isOpen, close }) => {
                     )
                   )}
                 </Accordeon>
-                <Accordeon
-                  button={
-                    <h3 className="my-[24px] text-18 font-bold">Сортировка</h3>
-                  }
-                >
-                  {sortData.map((sort) => (
-                    <button
-                      key={sort.label}
-                      // @ts-ignore
-                      onClick={() => setSortValueT(sort.label)}
-                      className={clsx(
-                        "mb-[8px] rounded-[200px] px-[16px] py-[6px] flex justify-between items-center w-fit h-[36px] bg-gray text-[18px] leading-[24px] hover:bg-green hover:text-white trans-def",
-                        { "bg-green text-white": sort.label === sortValueT }
-                      )}
-                    >
-                      <span>{sort.label}</span>
-                    </button>
-                  ))}
-                </Accordeon>
+<h3 className="my-[24px] text-18 font-bold">Сортировка</h3>
+{sortData.map((sort) => (
+  <button
+    key={sort.label}
+    // @ts-ignore
+    onClick={() => setSortValueT(sort.label)}
+    className={clsx(
+      "mb-[8px] rounded-[200px] px-[16px] py-[6px] flex justify-between items-center w-fit h-[36px] bg-gray text-[18px] leading-[24px] hover:bg-green hover:text-white trans-def",
+      { "bg-green text-white": sort.label === sortValueT }
+    )}
+  >
+    <span>{sort.label}</span>
+  </button>
+))}
+
               </div>
               <button
                 onClick={apply}

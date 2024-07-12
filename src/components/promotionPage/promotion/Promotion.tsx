@@ -1,4 +1,4 @@
-import { FC, useEffect,MouseEvent, useState } from "react";
+import { FC, useEffect,MouseEvent, useState ,useRef } from "react";
 import { IPromotion } from "../../../types/types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
@@ -59,6 +59,8 @@ const Promotion: FC<IPromotion> = ({
   const queryClient = useQueryClient();
   const [isContactsOpen, setIsContactsOpen] = useState(false);
   const [viewImage, setViewImage] = useState("");
+    const mapRef = useRef<HTMLDivElement>(null); // Add ref for map
+
   const [restTime, setRestTime] = useState("");
   const [currentImage, setCurrentImage] = useState("");
   const { data: profile } = useProfile();
@@ -226,6 +228,9 @@ console.log(images[1]?.image);
   //   }, {})
   // );
 const fl = false
+  const handleScroolToMap = () => {
+    mapRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <section className="container-two pt-[44px] pb-80">
       <h1 className="title">{title}</h1>
@@ -331,7 +336,10 @@ const fl = false
             </button>
           </div>
       
-        
+        <div onClick={handleScroolToMap}>
+          <span>Адрес: </span>
+         <span>{address}</span> 
+        </div>
         <div className="my-[21px] max-w-[255px] w-full h-[1px] bg-[#D7D7D7]"></div>
          <span className="text-grey cursor-pointer  gap-4 flex items-center" onClick={toggleAccordion}>
         Часы работы
@@ -361,13 +369,13 @@ const fl = false
         </div>
         
       )}
-          <div className="font-mulish flex justify-end">
+          <div className="font-mulish flex justify-start mt-[20px]">
             <div className="flex justify-start items-start flex-col w-[15 0px]">
               <div className="flex items-center gap-1   justify-center text-14 leading-[19px] text-[#4F4F4F]">
                 <img src={timeIcon} alt="clock" />
-                <span>До конца акции</span>
+                <span>Акция действует до</span>
               </div>
-              <span className="text-grey ml-[14px]">{restTime}</span>
+              <span className="text-grey">{restTime}</span>
             </div>
             </div>
         </div>
@@ -424,7 +432,10 @@ const fl = false
       </div>
       <h2 className="mt-80 mb-[32px]">Описание</h2>
       <p>{description}</p>
-      {address[0]  && (
+     <section
+       ref={mapRef} 
+     >
+        {address[0]  && (
         <>
           <h2 className="mt-80 mb-[32px]">Адреса</h2>
           <span className="text-[18px] leading-[23px]">Адрес</span>
@@ -449,7 +460,8 @@ const fl = false
             ></Marker>
           </MapContainer>
         </>
-      )}
+      )}</section>
+    
       <Modal
         modalStyle="z-[100]"
         isOpen={!!viewImage}

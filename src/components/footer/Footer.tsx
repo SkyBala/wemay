@@ -4,7 +4,6 @@ import telegramIcon from "../../assets/images/icons/telegram.svg";
 import whatsappIcon from "../../assets/images/icons/whatsapp.svg";
 import vkIcon from "../../assets/images/icons/vk.svg";
 import facebookIcon from "../../assets/images/icons/facebook.svg";
-
 const Footer: FC = () => {
   const currentYear = new Date().getFullYear();
 
@@ -17,9 +16,11 @@ const Footer: FC = () => {
                <span className="text-14 font-medium leading-[16px]">           Сервис выгодных предложений </span>
         </div>
      
-
+    <span className="mt-[10px] font-semibold ">
+             Новости и блог
+              </span>
       
-        <div className="mt-60 mb-[75px] max-w-[965px] flex justify-between leading-[24px] tb:mb-[126px] tb:flex-col tb:gap-[80px]">
+        <div className="mt-60 mb-[75px] max-w-[965px] flex justify-between leading-[24px] tb:mb-[126px] tb:flex-col tb:gap-[80px] flex-col">
          <ul className="mt-[24px] flex gap-[16px]">
               <li>
                 <a href="">
@@ -47,6 +48,8 @@ const Footer: FC = () => {
                 </a>
               </li>
             </ul>
+         
+          
         </div>
         </div>
       

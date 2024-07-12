@@ -24,7 +24,9 @@ console.log(data);
     : data;
 
   return (
-    <div className="container company mt-[24px] mb-[4px] max-w-[1355px] flex justify-between items-center">
+    <section>
+        <h2 className="container p-[20px] mt-[20px]">Компании</h2>
+    <div className="container company  mb-[4px] max-w-[1355px] flex justify-between items-center">
       <button
         className="px-10 h-full slider-prev group"
         onClick={() => setSelectedCategory("someCategory")}
@@ -68,6 +70,7 @@ console.log(data);
         />
       </button>
     </div>
+    </section>
   );
 };
 

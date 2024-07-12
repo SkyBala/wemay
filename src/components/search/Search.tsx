@@ -55,7 +55,6 @@ const Search: FC<Props> = ({ isSearchFocus, setIsSearchFocus }) => {
     setIsSearchFocus(false);
   };
 
-
   return (
     <div ref={searchRef} className="relative flex-[0_1_578px] z-[30] ">
       <div className="box-secondary flex items-center gap-[5px]">
@@ -71,7 +70,7 @@ const Search: FC<Props> = ({ isSearchFocus, setIsSearchFocus }) => {
         />
         <button
           onClick={handleSearch}
-          className="ml-2 px-2   py-1 bg-blue-500 text-black rounded"
+          className="ml-2 px-2 py-1 bg-blue-500 text-black rounded show-on-mobile"
         >
           Искать
         </button>

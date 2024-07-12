@@ -72,7 +72,7 @@ const params = {
     : {}),
 };
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["promotions"],
+    queryKey: ["promotion"],
     queryFn: () =>
       promotionService[
         promotionsType === "endSoon"
