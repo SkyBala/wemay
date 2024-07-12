@@ -68,6 +68,9 @@ const PromotionPublicationPage: FC = memo(() => {
     }
   }, [profile, status]);
 
+
+  // ...
+
   const { mutate: publicate, isPending } = useMutation({
     mutationFn: promotionService.create,
     onSuccess: () => {
@@ -76,11 +79,13 @@ const PromotionPublicationPage: FC = memo(() => {
       setImages([]);
       setEndDate(null);
       setEndDateTime(null);
+      navigate("/"); // Переход на главную страницу после успешной публикации
     },
     onError: (error: any) => {
       dispatch(setErrorNotification(error.response.data?.[0]));
     },
   });
+
 
   const onClickPublicate: SubmitHandler<IPromotionFields> = ({
     type,
@@ -171,7 +176,7 @@ const PromotionPublicationPage: FC = memo(() => {
               htmlFor="promotion-slider-image"
               className="box-btn block w-fit text-green"
             >
-              Добавить фото для слайдера
+               Добавить обложку
               <input
                 type="file"
                 className="hidden"
@@ -209,13 +214,11 @@ const PromotionPublicationPage: FC = memo(() => {
           <div>
             <h3 className="mb-[8px] title-3">Дата окончания</h3>
             <DatePicker
-              label="Дата"
               sx={pickerSx}
               value={endDate}
               onChange={(value) => setEndDate(value)}
             />
             <TimePicker
-              label="Часы"
               views={["hours", "minutes", "seconds"]}
               ampm={false}
               sx={pickerSx}

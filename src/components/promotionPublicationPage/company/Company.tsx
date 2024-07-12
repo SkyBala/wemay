@@ -25,8 +25,7 @@ const Company: FC<ICompanyProps> = ({ company: companyId, setCompany }) => {
         value={companyId}
         isLoading={isLoading}
         onChange={(value) => setCompany(value as number)}
-        customOptions={{ options: data?.results, labelKey: "name" }}
-      />
+        customOptions={{ options: data?.results, labelKey: "name" }}      />
       <Link to="/add-company" className="mt-[15px] block text-green">
         Добавить компанию
       </Link>
