@@ -136,40 +136,46 @@ console.log(contacts);
   }, [images]);
 console.log(images[1]?.image);
 
-  useEffect(() => {
-    const date = end_date.split(" ")[0];
-    const hours = end_date.split(" ")[1];
-    const hour = +hours.split(":")[0].slice(1);
-    const minutes = +hours.split(":")[1];
-    const seconds = +hours.split(":")[2];
+useEffect(() => {
+  const date = end_date.split(" ")[0];
+  const hours = end_date.split(" ")[1];
+  const hour = +hours.split(":")[0].slice(1);
+  const minutes = +hours.split(":")[1];
+  const seconds = +hours.split(":")[2];
 
-    let timer = setTimeout(function tick() {
-      const restDate = new Date(date);
-      restDate.setHours(hour);
-      restDate.setMinutes(minutes);
-      restDate.setSeconds(seconds);
+  let timer = setTimeout(function tick() {
+    const restDate = new Date(date);
+    restDate.setHours(hour);
+    restDate.setMinutes(minutes);
+    restDate.setSeconds(seconds);
 
-      const restTime = +restDate - +new Date();
+    const restTime = +restDate - +new Date();
 
-      if (restTime <= 0) {
-        navigate("/", { replace: true });
-        dispatch(setErrorNotification("Вышло время текущей акции"));
-      }
+    if (restTime <= 0) {
+      navigate("/", { replace: true });
+      dispatch(setErrorNotification("Вышло время текущей акции"));
+      return; // Ensure to return to prevent further execution
+    }
 
-      const restDays = Math.floor(restTime / 1000 / 60 / 60 / 24);
-      const restHours = Math.floor(restTime / 1000 / 60 / 60) % 24;
+    const restDays = Math.floor(restTime / 1000 / 60 / 60 / 24);
+    const restHours = Math.floor(restTime / 1000 / 60 / 60) % 24;
 
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() + restDays);
+    endDate.setHours(endDate.getHours() + restHours);
 
-      setRestTime(
-        `${restDays}д : ${restHours}ч`
-      );
-      timer = setTimeout(tick, 1000);
-    }, 0);
+    const day = String(endDate.getDate()).padStart(2, '0');
+    const month = String(endDate.getMonth() + 1).padStart(2, '0');
+    const year = String(endDate.getFullYear()).slice(-2);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+    setRestTime(`${day}.${month}.${year}`);
+    timer = setTimeout(tick, 1000);
+  }, 0);
+
+  return () => {
+    clearTimeout(timer);
+  };
+}, [end_date, navigate, dispatch]);
 
   // const onClickLike = () => {
   //   like(id);
@@ -335,12 +341,11 @@ const fl = false
               <span className="">{localLikes?.length || 0}</span>
             </button>
           </div>
-      
+      <div className="flex flex-col space-y-4">
         <div onClick={handleScroolToMap}>
           <span>Адрес: </span>
          <span>{address}</span> 
         </div>
-        <div className="my-[21px] max-w-[255px] w-full h-[1px] bg-[#D7D7D7]"></div>
          <span className="text-grey cursor-pointer  gap-4 flex items-center" onClick={toggleAccordion}>
         Часы работы
         {isOpen ?
@@ -369,6 +374,8 @@ const fl = false
         </div>
         
       )}
+      </div>
+      <div className="my-[21px] max-w-[255px] w-full h-[1px] bg-[#D7D7D7]"></div>
           <div className="font-mulish flex justify-start mt-[20px]">
             <div className="flex justify-start items-start flex-col w-[15 0px]">
               <div className="flex items-center gap-1   justify-center text-14 leading-[19px] text-[#4F4F4F]">
@@ -452,7 +459,7 @@ const fl = false
               // @ts-ignore
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+            />  
             <Marker
               // @ts-ignore
               position={addressCoordinates}
