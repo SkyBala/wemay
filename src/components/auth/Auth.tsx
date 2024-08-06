@@ -8,6 +8,7 @@ import ForgotPassword from "./forgotPassword/ForgotPassword";
 import ChangePassword from "./changePassword/ChangePassword";
 import { useLocation } from "react-router-dom";
 import successIcon from "../../assets/images/icons/success.svg";
+import crossIcon from "../../assets/images/icons/cross.svg";
 
 interface IAuthProps {
   isOpen: boolean;
@@ -57,6 +58,12 @@ const Auth: FC<IAuthProps> = ({ isOpen, close, type = "register" }) => {
       isOpen={isAuthOpen}
       contentStyle="relative pt-20 px-40 pb-[32px] max-w-[600px] w-full font-mulish tb:px-[15px]"
     >
+      <button
+        onClick={closeAuth}
+        className="absolute top-4 right-4"
+      >
+        <img src={crossIcon} alt="close" className="w-6 h-6" />
+      </button>
       {isAuth ? (
         <>
           <h2 className="mb-[56px] font-montserrat">Вы авторизовались!</h2>
