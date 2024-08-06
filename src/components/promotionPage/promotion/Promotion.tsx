@@ -444,8 +444,8 @@ const fl = false
      >
         {address[0]  && (
         <>
-          <h2 className="mt-80 mb-[32px]">Адреса</h2>
-          <span className="text-[18px] leading-[23px]">Адрес</span>
+          <h2 className="mt-80 mb-[32px]">Адрес</h2>
+
           <span className="mt-[8px] mb-[32px] block text-[18px] leading-[23px]">
             {address}
           </span>

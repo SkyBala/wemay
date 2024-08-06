@@ -63,7 +63,7 @@ const Reviews: FC<Props> = ({ promotionId }) => {
               <ReviewCard key={review.id} {...review} />
             ))
           ) : (
-            <span className="mt-20 block text-center text-[18px] font-bold p-[30px]">Пока нет отзывов!</span>
+            <span className="mt-20 block text-center text-[18px] font-bold p-[30px]">Пока нет отзывов</span>
           )}
           {(reviews?.count || 0) + 3 > limit ? (
             <button
