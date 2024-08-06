@@ -131,7 +131,7 @@ console.log(data?.results);
               <PromotionCard key={promotion.id} {...promotion} />
             ))
           )}
-        </div>
+        </div>фшг
         {page * limit < (data?.count || 0) && (
           <button onClick={showMore} className="btn block mx-auto">
             Показать ещё
