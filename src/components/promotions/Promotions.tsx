@@ -4,10 +4,8 @@ import useMatchMedia from "use-match-media";
 import geoIcon from "../../assets/images/icons/geo.svg";
 import filterIcon from "../../assets/images/icons/filter.svg";
 import PromotionCard from "../promotionCard/PromotionCard";
-import arrowLeftIcon from "../../assets/images/icons/green-arrow-left.svg";
-import arrowRightIcon from "../../assets/images/icons/green-arrow-right.svg";
+
 import Filter from "../filter/Filter";
-import Pagination from "../ui/pagination/Pagination";
 import Map from "../map/Map";
 import clsx from "clsx";
 import promotionService from "../../services/promotionService";
@@ -34,7 +32,6 @@ interface IPromotions {
 }
 
 const Promotions: FC<IPromotions> = ({
-  isPagination = false,
   title = "Все акции",
   style = "",
   companyName = "",
@@ -44,11 +41,10 @@ const Promotions: FC<IPromotions> = ({
 }) => {
   const { categories, promotionTypes, discountPercentage, sortValue } =
     useSelector((state: RootState) => state.filter);
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const [limit, setLimit] = useState(6);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
-  const isTabler: boolean = useMatchMedia("(max-width: 768px)");
   const categoryName = categories[0];
   const discount = discountPercentage + "";
   const type = typesSlug[promotionTypes[0]];
@@ -131,30 +127,13 @@ console.log(data?.results);
               <PromotionCard key={promotion.id} {...promotion} />
             ))
           )}
-        </div>фшг
+        </div>
         {page * limit < (data?.count || 0) && (
           <button onClick={showMore} className="btn block mx-auto">
             Показать ещё
           </button>
         )}
-        {isPagination && (
-          <Pagination
-            page={page}
-            count={data?.count || 0}
-            limit={limit}
-            setPage={setPage}
-            pagesViewLimit={isTabler ? 4 : 5}
-            reactWhenNumber={1}
-            leftBtnIcon={arrowLeftIcon}
-            rightBtnIcon={arrowRightIcon}
-            wrapperStyle="mt-20 gap-[28px] justify-center tb:gap-[18px]"
-            paginationStyle="gap-[8px]"
-            navBtnsStyle="disabled:opacity-50 hover:brightness-50"
-            pageBtnStyle="block rounded-[24px] w-[56px] h-[56px] text-center trans-def"
-            activePageBtnStyle="bg-green text-white"
-            nearestPageBtnStyle="bg-gray"
-          />
-        )}
+
       </section>
       <Filter isOpen={isFilterOpen} close={() => setIsFilterOpen(false)} />
     </>

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, MouseEvent } from "react";
 import { IReview } from "../../../types/types";
 import likeIcon from "../../../assets/images/icons/likes.svg";
 import likeGreenIcon from "../../../assets/images/icons/liked.svg";
@@ -7,10 +7,12 @@ import { useProfile } from "../../../hooks/useProfile";
 import { useMutation } from "@tanstack/react-query";
 import promotionService from "../../../services/promotionService";
 import clsx from "clsx";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store/store";
+import { setIsAuthOpen } from "../../../store/slices/authSlice";
 
 const ReviewCard: FC<IReview> = ({ id, author, created_time, body, likes }) => {
+  const dispatch = useDispatch();
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
   const [localLikes, setLocalLikes] = useState<string[]>([]);
 
@@ -24,19 +26,24 @@ const ReviewCard: FC<IReview> = ({ id, author, created_time, body, likes }) => {
     setLocalLikes(likes);
   }, [likes]);
 
-  const handleLike = () => {
-    if (profile) {
-      if (localLikes?.includes(profile.id)) {
-        likeReview(id);
-        setLocalLikes((prev) => prev.filter((like) => like !== profile.id));
-      } else {
-        likeReview(id);
-        setLocalLikes((prev) => [...prev, profile.id]);
-      }
+  const handleLike = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    if (!profile?.id) {
+      dispatch(setIsAuthOpen(true));
+      return;
+    }
+
+    if (localLikes.includes(profile.id)) {
+      likeReview(id);
+      setLocalLikes((prev) => prev.filter((like) => like !== profile.id));
+    } else {
+      likeReview(id);
+      setLocalLikes((prev) => [...prev, profile.id]);
     }
   };
 
-  const isLiked = profile && localLikes?.includes(profile.id);
+  const isLiked = profile && localLikes.includes(profile.id);
 
   return (
     <div className="mt-[32px] rounded-[24px] p-[24px] flex justify-between items-end bg-white">
@@ -58,16 +65,15 @@ const ReviewCard: FC<IReview> = ({ id, author, created_time, body, likes }) => {
         <span className="text-14">{localLikes.length}</span>
         <button
           onClick={handleLike}
-          disabled={!profile?.id}
           className={clsx(
             "w-[20px] h-[18px] bg-center bg-no-repeat",
           )}
         >
-        <img src={`${isLiked && isAuth ? likeGreenIcon : likeIcon}`} alt="image" /></button>
+          <img src={`${isLiked && isAuth ? likeGreenIcon : likeIcon}`} alt="image" />
+        </button>
       </div>
     </div>
   );
 };
 
 export default ReviewCard;
-  
