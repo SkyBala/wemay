@@ -11,39 +11,39 @@ const Footer: FC = () => {
   return (
     <footer className="bg-gray">
       <div className="container px-4 py-6 sm:py-8 sm:px-6">
-        <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start">
-          <div className="flex flex-col items-center mb-4 sm:mb-0">
-            <h2 className="mb-4 text-primary font-extrabold sm:text-center">wemay</h2>
-            <span className="text-sm sm:text-base font-medium">Сервис выгодных предложений</span>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-start">
+          <div className="flex flex-col items-start mb-4 sm:mb-0">
+            <h2 className="mb-4 text-primary font-extrabold sm:text-start">wemay</h2>
+            <span className="text-sm sm:text-start font-medium">Сервис выгодных предложений</span>
           </div>
           
           <span className="mt-4 sm:mt-0 font-semibold items-start">Новости и блог</span>
           
-          <div className="mt-6 sm:mt-0 flex flex-col sm:flex-row sm:items-center">
+          <div className="mt-6 sm:mt-0 flex flex-col sm:flex-row sm:items-start">
             <ul className="flex gap-4 sm:gap-8 mb-4 sm:mb-0">
               <li>
                 <a href="">
-                  <img src={instagramIcon} alt="instagram" className="w-8 h-8 sm:w-16 sm:h-16" />
+                  <img src={instagramIcon} alt="instagram"  className="w-[40px] h-[40px]" />
                 </a>
               </li>
               <li>
                 <a href="">
-                  <img src={telegramIcon} alt="telegram" className="w-8 h-8 sm:w-16 sm:h-16" />
+                  <img src={telegramIcon} alt="telegram"  className="w-[40px] h-[40px]"/>
                 </a>
               </li>
               <li>
                 <a href="">
-                  <img src={whatsappIcon} alt="whatsapp" className="w-8 h-8 sm:w-16 sm:h-16" />
+                  <img src={whatsappIcon} alt="whatsapp"  className="w-[40px] h-[40px]" />
                 </a>
               </li>
               <li>
                 <a href="">
-                  <img src={vkIcon} alt="vk" className="w-8 h-8 sm:w-16 sm:h-16" />
+                  <img src={vkIcon} alt="vk"  className="w-[40px] h-[40px]" />
                 </a>
               </li>
               <li>
                 <a href="">
-                  <img src={facebookIcon} alt="facebook" className="w-8 h-8 sm:w-16 sm:h-16" />
+                  <img src={facebookIcon} alt="facebook" className="w-[40px] h-[40px]" />
                 </a>
               </li>
             </ul>
