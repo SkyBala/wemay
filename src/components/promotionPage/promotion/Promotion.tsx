@@ -44,8 +44,6 @@ import arrowPrev from "../../../assets/images/icons/Vectorleft.svg"
     sunday: "Вс",
   };
 
-  const getPercentFromNumber = (firstNumber: number, secondNumber: number) =>
-    Math.floor((firstNumber / secondNumber) * 100);
 
 
   SwiperCore.use([Navigation]);
@@ -241,7 +239,6 @@ import arrowPrev from "../../../assets/images/icons/Vectorleft.svg"
     //       : { ...prev, [day]: workSchedule[day] };
     //   }, {})
     // );
-  const fl = false
     const handleScroolToMap = () => {
       mapRef.current?.scrollIntoView({ behavior: "smooth" });
     };
