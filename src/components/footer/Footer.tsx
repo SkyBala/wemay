@@ -17,7 +17,7 @@ const Footer: FC = () => {
             <span className="text-sm sm:text-start font-medium">Сервис выгодных предложений</span>
           </div>
           
-          <span className="mt-4 sm:mt-0 font-semibold items-start">Новости и блог</span>
+       
           
           <div className="mt-6 sm:mt-0 flex flex-col sm:flex-row sm:items-start">
             <ul className="flex gap-4 sm:gap-8 mb-4 sm:mb-0">
