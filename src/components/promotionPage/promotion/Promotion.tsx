@@ -69,12 +69,20 @@ import arrowPrev from "../../../assets/images/icons/Vectorleft.svg"
       const mapRef = useRef<HTMLDivElement>(null); // Add ref for map
 
     const [restTime, setRestTime] = useState("");
- const [currentImage, setCurrentImage] = useState(images[1]?.image);
-  const swiperRef = useRef<SwiperCore>();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  useEffect(() => {
-    setCurrentImage(images[1]?.image);
-  }, [images]);
+  const handleNextSlide = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const handlePrevSlide = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
+
   const { data: profile } = useProfile();
 
     const { data: promotionData } = useQuery({
@@ -143,10 +151,6 @@ import arrowPrev from "../../../assets/images/icons/Vectorleft.svg"
       });
     };
 
-    useEffect(() => {
-      setCurrentImage(images[0]?.image);
-    }, [images]);
-  console.log(images[1]?.image);
 
     useEffect(() => {
       const date = end_date.split(" ")[0];
@@ -247,53 +251,51 @@ import arrowPrev from "../../../assets/images/icons/Vectorleft.svg"
         <h1 className="title">{title}</h1>
         <div className="mt-[32px] flex justify-between gap-[32px] items-start blt:flex-col blt:items-stretch">
            <div className="flex-[0_0_740px] blt:flex-auto">
-        <div
-        onClick={() => setCurrentImage(currentImage)}
-        style={{ backgroundImage: `url(${currentImage})` }}
-        className="relative rounded-[24px] w-full h-[454px] flex items-end justify-between bg-cover bg-center bg-no-repeat text-white overflow-hidden trans-def cursor-pointer stb:h-[200px]"
-      >
-        {/* Стрелки для управления слайдами */}
-        <button
-          onClick={() => swiperRef.current?.slidePrev()}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full"
-        >
-          <img src={arrowPrev} alt="Previous" />
-        </button>
-        <button
-          onClick={() => swiperRef.current?.slideNext()}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full"
-        >
-          <img src={arrowNext} alt="Next" />
-        </button>
-      </div>
-          <div className="mt-[24px] flex justify-between items-center tb:flex-col tb:items-start tb:gap-[24px]">
-           <Swiper
-        spaceBetween={21}
-        slidesPerView="auto"
-        onSwiper={(swiper) => (swiperRef.current = swiper)}
-        onSlideChange={(swiper) => {
-          setCurrentImage(images[swiper.activeIndex]?.image);
-        }}
-        className="m-0 max-w-[595px]"
-      >
-        {images.map((image, key) => (
-          <SwiperSlide
-            key={key}
-            className="w-[135px] h-[80px] rounded-[16px] overflow-hidden"
+    <div
+            style={{ backgroundImage: `url(${images[currentImageIndex].image})` }}
+            className="relative rounded-[24px] w-full h-[454px] flex items-end justify-between bg-cover bg-center bg-no-repeat text-white overflow-hidden trans-def cursor-pointer stb:h-[200px]"
           >
+            {/* Стрелки для управления слайдами */}
             <button
-              className="w-full h-full"
-              onClick={() => setCurrentImage(image.image)}
+              onClick={handlePrevSlide}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full"
             >
-              <img
-                src={image.image}
-                alt={`promotion ${key + 1}`}
-                className="w-full h-full object-cover object-center"
-              />
+              <img src={arrowPrev} alt="Previous" />
             </button>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            <button
+              onClick={handleNextSlide}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full"
+            >
+              <img src={arrowNext} alt="Next" />
+            </button>
+          </div>
+          <div className="mt-[24px] flex justify-between items-center tb:flex-col tb:items-start tb:gap-[24px]">
+<Swiper
+              spaceBetween={21}
+              slidesPerView="auto"
+              onSlideChange={(swiper) => {
+                setCurrentImageIndex(swiper.activeIndex);
+              }}
+              className="m-0 max-w-[595px]"
+            >
+              {images.map((image, key) => (
+                <SwiperSlide
+                  key={key}
+                  className="w-[135px] h-[80px] rounded-[16px] overflow-hidden"
+                >
+                  <button
+                    className="w-full h-full"
+                    onClick={() => setCurrentImageIndex(key)}
+                  >
+                    <img
+                      src={image.image}
+                      alt={`promotion ${key + 1}`}
+                      className="w-full h-full object-cover object-center"
+                    />
+                  </button>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
           <div className="rounded-[24px] p-[32px] bg-gray flex-[0_1_508px] font-mulish">
@@ -386,56 +388,57 @@ import arrowPrev from "../../../assets/images/icons/Vectorleft.svg"
               </div>
               </div>
           </div>
-          <Modal
-            isOpen={isContactsOpen}
-            close={() => setIsContactsOpen(false)}
-            modalStyle="z-[60]"
-            contentStyle="pt-20 px-40 pb-[32px] relative text-[20px] leading-[24px]"
-          >
-            <div className="flex flex-row justify-between items-center mb-20">
-              
-            <h2 >Связаться</h2>
-              <button
-              onClick={() => setIsContactsOpen(false)}
-            className="pl-[20px]"
-            >
-              <img src={crossIcon} alt="cross" />
-            </button>
-            </div>
-          
-            {contacts?.results.map((tel) => (
-              <a
-                key={tel.id}
-                href={`tel:${tel.value}`}
-                className="btn my-10 flex justify-center gap-[8px] items-center w-[520px]"
-              >
-                <img src={telIcon} alt="tel" />
-                <span> {tel.title}</span>
-              </a>
-            ))}
-            <div className="flex gap-[16px] justify-center items-center">
-              {companyData?.instagram && (
-                <a href={companyData.instagram} target="_blank" className="h-[40px] w-[40px]">
-                  <img src={instagramIcon} alt="instagram" />
-                </a>
-              )}
-              {companyData?.facebook && (
-                <a href={companyData.facebook} target="_blank" className="h-[40px] w-[40px]">
-                  <img src={facebookIcon} alt="facebook" />
-                </a>
-              )}
-              {companyData?.whatsapp && (
-                <a href={companyData.whatsapp} target="_blank" className="h-[40px] w-[40px]">
-                  <img src={whatsappIcon} alt="whatsapp" />
-                </a>
-              )}
-              {companyData?.website && (
-                <a href={companyData.website} target="_blank" className="h-[40px] w-[40px]">
-                  <img src={websiteIcon} alt="website" />
-                </a>
-              )}
-            </div>
-          </Modal>
+         <Modal
+  isOpen={isContactsOpen}
+  close={() => setIsContactsOpen(false)}
+  modalStyle="z-[60]"
+  contentStyle="pt-20 pb-[32px] relative text-[20px] leading-[24px] px-4 sm:px-8 md:px-12 tablet:px-16 xl:px-40"
+>
+  <div className="flex flex-row justify-between items-center mb-20">
+    <h2>Связаться</h2>
+    <button
+      onClick={() => setIsContactsOpen(false)}
+      className="pl-[20px]"
+    >
+      <img src={crossIcon} alt="cross" />
+    </button>
+  </div>
+
+  {contacts?.results.map((tel) => (
+    <a
+      key={tel.id}
+      href={`tel:${tel.value}`}
+      className="btn my-10 flex justify-center gap-[8px] items-center w-full sm:w-[320px] md:w-[400px] tablet:w-[520px]"
+    >
+      <img src={telIcon} alt="tel" />
+      <span>{tel.title}</span>
+    </a>
+  ))}
+
+  <div className="flex gap-[16px] justify-center items-center">
+    {companyData?.instagram && (
+      <a href={companyData.instagram} target="_blank" className="h-[40px] w-[40px]">
+        <img src={instagramIcon} alt="instagram" />
+      </a>
+    )}
+    {companyData?.facebook && (
+      <a href={companyData.facebook} target="_blank" className="h-[40px] w-[40px]">
+        <img src={facebookIcon} alt="facebook" />
+      </a>
+    )}
+    {companyData?.whatsapp && (
+      <a href={companyData.whatsapp} target="_blank" className="h-[40px] w-[40px]">
+        <img src={whatsappIcon} alt="whatsapp" />
+      </a>
+    )}
+    {companyData?.website && (
+      <a href={companyData.website} target="_blank" className="h-[40px] w-[40px]">
+        <img src={websiteIcon} alt="website" />
+      </a>
+    )}
+  </div>
+</Modal>
+
         </div>
         <h2 className="mt-80 mb-[32px]">Описание</h2>
         <p>{description}</p>
