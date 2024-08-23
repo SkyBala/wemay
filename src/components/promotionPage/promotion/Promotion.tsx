@@ -345,9 +345,9 @@ import arrowPrev from "../../../assets/images/icons/Vectorleft.svg"
               </button>
             </div>
         
-          <div onClick={handleScroolToMap}>
+          <div className="cursor-pointer" onClick={handleScroolToMap}>
             <span>Адрес: </span>
-          <span>{address}</span> 
+          <span >{address}</span> 
           </div>
           <div className="my-[21px] max-w-[255px] w-full h-[1px] bg-[#D7D7D7]"></div>
           <span className="text-grey cursor-pointer  gap-4 flex items-center" onClick={toggleAccordion}>
