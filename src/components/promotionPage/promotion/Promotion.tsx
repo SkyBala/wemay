@@ -339,7 +339,7 @@ console.log("its button clicked");
             > 
               <img
                 src={
-                  localLikes.includes(profile?.id) ? likedIcon : likeGreenIcon
+                  localLikes.includes(profile?.id!) ? likedIcon : likeGreenIcon
                 }
                 alt="like-green"
                 className="mb-[2px] block min-w-[18px] h-[16px]"
