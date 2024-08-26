@@ -3,8 +3,7 @@ import { FC, useEffect, useState } from "react";
 import useMatchMedia from "use-match-media";
 import geoIcon from "../../assets/images/icons/geo.svg";
 import filterIcon from "../../assets/images/icons/filter.svg";
-import PromotionCard from "../promotionCard/PromotionCard";
-
+import PromotionCard from "../promotionCard/PromotionCard"; 
 import Filter from "../filter/Filter";
 import Map from "../map/Map";
 import clsx from "clsx";

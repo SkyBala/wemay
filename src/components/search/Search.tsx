@@ -74,12 +74,7 @@ const Search: FC<Props> = ({ isSearchFocus, setIsSearchFocus }) => {
         >
           <img src={searchIcon} alt="search" />
         </button>
-        <button
-          onClick={handleSearch}
-          className="ml-2 px-2 py-1 bg-green-500 text-white rounded show-on-mobile"
-        >
-          <img src={searchIcon} alt="search" />
-        </button>
+      
       </div>
       <div
         className={clsx(

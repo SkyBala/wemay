@@ -130,26 +130,27 @@ import arrowPrev from "../../../assets/images/icons/Vectorleft.svg"
         queryClient.prefetchQuery({ queryKey: ['liked-promotions'] });
       },
     });
+console.log(profile?.id);
 
-    const onClickLike = (event: MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      console.log('click1');
+const onClickLike = (event: MouseEvent<HTMLButtonElement>) => {
+  event.preventDefault();
+console.log("its button clicked");
 
-      if (!profile?.id) {
-        dispatch(setIsAuthOpen(true));
-        return;
-      }
+  if (profile?.id === undefined) {
+    dispatch(setIsAuthOpen(true));
+    return;
+  }
 
-      mutate(id, {
-        onSuccess: () => {
-          setLocalLikes((prev) =>
-            prev.includes(profile.id)
-              ? prev.filter((likeId) => likeId !== profile.id)
-              : [...prev, profile.id]
-          );
-        },
-      });
-    };
+  mutate(id, {
+    onSuccess: () => {
+      setLocalLikes((prev) =>
+        prev.includes(profile.id)
+          ? prev.filter((likeId) => likeId !== profile.id)
+          : [...prev, profile.id]
+      );
+    },
+  });
+};
 
 
     useEffect(() => {
@@ -325,24 +326,26 @@ import arrowPrev from "../../../assets/images/icons/Vectorleft.svg"
             >
               <button
                 onClick={() => setIsContactsOpen(true)}
-                className="btn flex-[0_1_630px] text-center"
+            
+                className="btn flex-[0_1_630px] text-center cursor-pointer"
               >
                 Связаться
               </button>
-              <button
-                onClick={onClickLike}
-                disabled={!profile?.id}
-                className="box-secondary border-green rounded-[100px] py-[7.5px] px-[24px] text-center text-14 leading-[19px] text-green disabled:pointer-events-none"
-              > 
-                <img
-                  src={
-                    localLikes.includes(profile?.id!) ? likedIcon : likeGreenIcon
-                  }
-                  alt="like-green"
-                  className="mb-[2px] block min-w-[18px] h-[16px]"
-                />
-                <span className="">{localLikes?.length || 0}</span>
-              </button>
+             <button
+              onClick={onClickLike}
+                  disabled={false}
+           
+              className="box-secondary border-green rounded-[100px] py-[7.5px] px-[24px] text-center text-14 leading-[19px] text-green cursor-pointer"
+            > 
+              <img
+                src={
+                  localLikes.includes(profile?.id) ? likedIcon : likeGreenIcon
+                }
+                alt="like-green"
+                className="mb-[2px] block min-w-[18px] h-[16px]"
+              />
+              <span className="">{localLikes?.length || 0}</span>
+            </button>
             </div>
         
           <div className="cursor-pointer" onClick={handleScroolToMap}>
